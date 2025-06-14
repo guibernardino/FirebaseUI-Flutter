@@ -51,6 +51,7 @@ class PhoneInputView extends StatefulWidget {
   /// {@macro ui.auth.providers.phone_auth_provider.mfa_hint}
   final fba.PhoneMultiFactorInfo? mfaHint;
 
+
   /// {@macro ui.auth.views.phone_input_view}
   const PhoneInputView({
     super.key,
@@ -141,14 +142,16 @@ class _PhoneInputViewState extends State<PhoneInputView> {
               ErrorText(exception: state.exception),
               const SizedBox(height: 8),
             ],
-            const SizedBox(height: 8),
-            UniversalButton(
-              text: l.goBackButtonLabel,
-              variant: ButtonVariant.text,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+            if (Navigator.of(context).canPop()) ...[
+              const SizedBox(height: 8),
+              UniversalButton(
+                text: l.goBackButtonLabel,
+                variant: ButtonVariant.text,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
             if (widget.footerBuilder != null) widget.footerBuilder!(context),
           ],
         );
